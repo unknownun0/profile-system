@@ -1,4 +1,4 @@
--- Run this once in Supabase > SQL Editor
+-- Run once in Neon > SQL Editor
 create table profiles (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
@@ -10,6 +10,3 @@ create table profiles (
   socials jsonb not null default '{}',
   created_at timestamptz default now()
 );
-alter table profiles enable row level security; -- no public policies: only the server (service role) reads/writes
-
-insert into storage.buckets (id, name, public) values ('avatars', 'avatars', true);

@@ -1,4 +1,4 @@
-import { db, SOCIALS } from '@/lib/db'
+import { sql, SOCIALS } from '@/lib/db'
 import { createProfile, deleteProfile } from '../actions'
 
 export const dynamic = 'force-dynamic'
@@ -8,7 +8,7 @@ const Field = ({ n, label, type = 'text', ph }: { n: string; label: string; type
 )
 
 export default async function Admin() {
-  const { data: profiles } = await db.from('profiles').select('id,slug,name,position,company').order('created_at', { ascending: false })
+  const profiles = await sql`select id, slug, name, position, company from profiles order by created_at desc`
 
   return (
     <main className="admin">

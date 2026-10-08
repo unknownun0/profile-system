@@ -1,9 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
+import { neon } from '@neondatabase/serverless'
 
-// Server-only client (service role). Never import this in a client component.
-export const db = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
-  auth: { persistSession: false },
-})
+// Server-only. Never import this in a client component.
+export const sql = neon(process.env.DATABASE_URL!)
 
 export const SOCIALS = ['facebook', 'instagram', 'youtube', 'linkedin', 'whatsapp', 'viber', 'wechat', 'telegram'] as const
 

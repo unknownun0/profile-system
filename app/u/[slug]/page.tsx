@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { db, SOCIALS, socialHref } from '@/lib/db'
+import { sql, SOCIALS, socialHref } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,7 +8,7 @@ const Phone = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
 
 export default async function Profile({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const { data: p } = await db.from('profiles').select('*').eq('slug', slug).maybeSingle()
+  const [p] = await sql`select * from profiles where slug = ${slug} limit 1`
   if (!p) notFound()
 
   const emails = [p.email, p.email2].filter(Boolean) as string[]
